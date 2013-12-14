@@ -3,19 +3,18 @@
 require 'kuroneko'
 
 class Kuroneko
-  module En
+  # 英語版フォームでの問い合わせ
+  class En < Kuroneko
     # @return [String] 問い合わせフォームの URL
     URL = 'http://track.kuronekoyamato.co.jp/english/tracking'.freeze
 
-    class << self
-      # 英語版で初期化する
-      #
-      # @return [Kuroneko]
-      def new(option={})
-        obj = Kuroneko.new
-        obj.url = option[:url] || URL.dup
-        obj
-      end
+    # インスタンスを初期化する
+    #
+    # @param [Hash] options
+    # @see Kuroneko#initialize
+    def initialize(options={})
+      super
+      @url = URL.dup unless options[:url]
     end
   end
 end
