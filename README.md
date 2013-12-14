@@ -20,31 +20,67 @@ Or install it yourself as:
 
 ## Usage
 
+### 最新状態を取得する
+
 ``` ruby
 require "kuroneko"
 
 neko = Kuroneko.new
 
-# English Version
-require "kuroneko/en"
-neko = Kuroneko::En.new
-
-# 1 つの荷物の状態履歴
-history = neko.history("1234-5678-9012")
-
-# 複数の荷物の状態履歴
-histories = neko.histories("1234-5678-9012", "1234-5678-9013", ... )
-
-# 1 つの荷物の最新状態
 status = neko.status("1234-5678-9012")
-  # OR
-  status = history.latest
-  status = history.find(&:latest?)
+#=> #<struct Kuroneko::Status>
 
-# 複数の荷物の最新状態
-statuses = neko.statuses("1234-5678-9012", "1234-5678-9013", ... )
+status.number
+#=> "123456789012"
 
+status.status
+#=> "配達完了"
+
+status.to_h
+  => {
+    number: "123456789012",
+    status: "配達完了",
+    date:   "12/31",
+    time:   "12:59",
+    branch: "北東京ベース店",
+    branch_code: "030990"
+  }
 ```
+
+- 履歴のうち最新の `Kuroneko::Status` は `#latest?` に `true` を返します。
+- `Kuroneko#statuses` で複数を一度に照会でき、結果は `Array` で返されます。
+
+### 状態履歴を取得する
+
+``` ruby
+history = neko.history("1234-5678-9012")
+#=> #<Kuroneko::StatusHistory<Kuroneko::Status>>
+```
+
+- `StatusHistory` は `Array` を継承していて、以下を追加で実装しています。
+    - 履歴のうち最新の状態を返す `#latest`
+    - 伝票番号を返す `#number`
+- `Kuroneko#histories` で複数を一度に照会でき、結果は `Array` で返されます。
+
+### 英語版を利用する
+
+``` diff
+- require "kuroneko"
+- neko = Kuroneko.new
++ require "kuroneko/en"
++ neko = Kuroneko::En.new
+```
+
+英語版を使うと担当店 / 担当店コードは取得できません。
+
+### 伝票番号
+
+`#status`, `#statuses`, `#history`, `#histories` に渡す伝票番号は
+そのまま問い合わせに使用するため、クロネコヤマト側が受け付ける形式であれば
+どのようなものでも可能です。
+
+`Kuroneko::StatusHistory`, `Kuroneko::Status` から読み取る伝票番号は
+照会結果から取得し、数字のみからなる __文字列__ で返ります。
 
 ## Contributing
 
