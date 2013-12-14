@@ -9,6 +9,9 @@ require 'kuroneko/version'
 #
 # @see http://toi.kuronekoyamato.co.jp/cgi-bin/tneko
 class Kuroneko
+  # @return [String] 問い合わせフォームの URL
+  URL = 'http://toi.kuronekoyamato.co.jp/cgi-bin/tneko'.freeze
+
   # @return [Mechanize] 使用する Mechanize インスタンス
   attr_accessor :agent
 
@@ -22,7 +25,7 @@ class Kuroneko
   # @option options [String] :url 問い合わせフォームの URL
   def initialize(options={})
     @agent = options[:agent] || Mechanize.new
-    @url = options[:url] || 'http://toi.kuronekoyamato.co.jp/cgi-bin/tneko'
+    @url = options[:url] || URL.dup
   end
 
   # 1 つの荷物の状態履歴を照会する

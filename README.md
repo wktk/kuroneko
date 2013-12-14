@@ -25,6 +25,10 @@ require "kuroneko"
 
 neko = Kuroneko.new
 
+# English Version
+require "kuroneko/en"
+neko = Kuroneko::En.new
+
 # 1 つの荷物の状態履歴
 history = neko.history("1234-5678-9012")
 
