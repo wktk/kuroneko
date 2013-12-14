@@ -59,7 +59,7 @@ class Kuroneko
       return status unless status.is_a?(Nokogiri::XML::Element)
       attrs = status.css('td').to_a
       @latest = attrs.shift.css('img').attribute('alt').value == '最新'
-      attrs.map! { |elem| elem.text.encode('utf-8') }
+      attrs.map!(&:text)
     end
   end
 end
