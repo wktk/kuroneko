@@ -54,10 +54,10 @@ status.to_h
 
 ``` ruby
 history = neko.history("1234-5678-9012")
-#=> #<Kuroneko::StatusHistory<Kuroneko::Status>>
+#=> #<Kuroneko::History<Kuroneko::Status>>
 ```
 
-- `StatusHistory` は `Array` を継承していて、以下を追加で実装しています。
+- `History` は `Array` を継承していて、以下を追加で実装しています。
     - 履歴のうち最新の状態を返す `#latest`
     - 伝票番号を返す `#number`
 - `Kuroneko#histories` で複数を一度に照会でき、結果は `Array` で返されます。
@@ -79,7 +79,7 @@ history = neko.history("1234-5678-9012")
 そのまま問い合わせに使用するため、クロネコヤマト側が受け付ける形式であれば
 どのようなものでも可能です。
 
-`Kuroneko::StatusHistory`, `Kuroneko::Status` から読み取る伝票番号は
+`Kuroneko::History`, `Kuroneko::Status` から読み取る伝票番号は
 照会結果から取得し、数字のみからなる __文字列__ で返ります。
 
 ## Contributing

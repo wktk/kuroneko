@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-require 'kuroneko/status_history'
+require 'kuroneko/history'
 require 'kuroneko/status'
 
 class Kuroneko
@@ -9,7 +9,7 @@ class Kuroneko
       # ページをから情報を抽出する
       #
       # @param [Mechanize::Page] page 照会結果のページ
-      # @return [Array<Kuroneko::StatusHistory<Kuroneko::Status>>] 状態履歴
+      # @return [Array<Kuroneko::History<Kuroneko::Status>>] 状態履歴
       def parse_page(page)
         page.parser.css('table.saisin').map(&method(:parse_history))
       end
@@ -21,12 +21,12 @@ class Kuroneko
       # 履歴情報を解析する
       #
       # @param [Nokogiri::XML::Element] summary <table class="saisin">
-      # @return [Kuroneko::StatusHistory<Kuroneko::Status>] 状態履歴
+      # @return [Kuroneko::History<Kuroneko::Status>] 状態履歴
       def parse_history(summary)
         number, status = parse_meta(summary)
         statuses = summary.parent.css('table.meisai').first
         statuses = statuses ? parse_statuses(statuses) : [[true, status]]
-        StatusHistory.new(number, statuses.map { |s| Status.new(number, *s) })
+        History.new(number, statuses.map { |s| Status.new(number, *s) })
       end
 
       # 伝票番号と最新状態名を抽出する

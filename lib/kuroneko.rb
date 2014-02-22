@@ -35,7 +35,7 @@ class Kuroneko
   # 1 つの荷物の状態履歴を照会する
   #
   # @param [String, #to_s] number 伝票番号
-  # @return [Kuroneko::StatusHistory<Kuroneko::Status>] 状態履歴
+  # @return [Kuroneko::History<Kuroneko::Status>] 状態履歴
   def history(number)
     histories(number).first
   end
@@ -43,7 +43,7 @@ class Kuroneko
   # 複数の荷物の状態履歴を照会する
   #
   # @param [Array<String, #to_s>] numbers 伝票番号
-  # @return [Array<Kuroneko::StatusHistory<Kuroneko::Status>>] 状態履歴
+  # @return [Array<Kuroneko::History<Kuroneko::Status>>] 状態履歴
   def histories(*numbers)
     numbers.flatten.each_slice(10).map { |n| query(n) }.flatten(1)
   end
@@ -80,7 +80,7 @@ private
   # リクエストを送信して状態を抽出する
   #
   # @param [Array<String, #to_s>] numbers 伝票番号
-  # @return [Array<Kuroneko::StatusHistory<Kuroneko::Status>>] 状態履歴
+  # @return [Array<Kuroneko::History<Kuroneko::Status>>] 状態履歴
   def query(numbers)
     result_page = request(numbers)
     parser.parse(result_page)

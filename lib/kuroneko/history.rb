@@ -2,7 +2,7 @@
 
 class Kuroneko
   # 状態履歴
-  class StatusHistory < Array
+  class History < Array
     # @return [String] 伝票番号
     # @note 数字以外 (ハイフン等) は含まない
     attr_reader :number
