@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.name          = "kuroneko"
   spec.version       = Kuroneko::VERSION
   spec.authors       = ["wktk"]
-  spec.email         = ["mail@wktk.jp"]
+  spec.email         = ["wktk30@gmail.com"]
   spec.description   = %q{クロネコヤマトの荷物追跡を照会する}
   spec.summary       = spec.description
   spec.homepage      = "https://github.com/wktk/kuroneko"
