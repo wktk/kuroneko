@@ -41,10 +41,7 @@ class Kuroneko
   # @param [Array<String, #to_s>] numbers 伝票番号
   # @return [Array<Kuroneko::StatusHistory<Kuroneko::Status>>] 状態履歴
   def histories(*numbers)
-    numbers.flatten!
-    results = []
-    results.concat(query(numbers.shift(10))) until numbers.empty?
-    results
+    numbers.flatten.each_slice(10).map { |n| query(n) }.flatten(1)
   end
 
   # 1 つの荷物の最新状態を照会する
