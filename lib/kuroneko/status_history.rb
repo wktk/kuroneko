@@ -8,10 +8,10 @@ class Kuroneko
     attr_reader :number
 
     # @param [String] number 伝票番号
-    # @param [Nokogiri::XML::Element] table 状態履歴テーブル
-    def initialize(number, table)
+    # @param [Array<Kuroneko::Status>] history 状態履歴
+    def initialize(number, history)
       @number = number
-      super(parse(table))
+      super(history)
     end
 
     # @return [Kuroneko::Status] 履歴のうち最新の状態
@@ -19,17 +19,5 @@ class Kuroneko
       find(&:latest?) || last
     end
 
-  private
-
-    # 状態履歴テーブルを解析する
-    #
-    # @param [Nokogiri::XML::Element] table 状態履歴テーブル
-    # @return [Array<Kuroneko::Status>] 状態
-    def parse(table)
-      return table unless table.is_a?(Nokogiri::XML::Element)
-      statuses = table.css('tr').to_a
-      statuses.shift
-      statuses.map! { |status| Status.new(number, status) }
-    end
   end
 end

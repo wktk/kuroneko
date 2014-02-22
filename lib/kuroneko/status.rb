@@ -2,7 +2,7 @@
 
 class Kuroneko
   # 状態情報
-  Status = Struct.new(:number, :status, :date, :time, :branch, :branch_code)
+  Status = Struct.new(:number, :latest, :status, :date, :time, :branch, :branch_code)
 
   class Status
     # @!attribute number
@@ -10,6 +10,9 @@ class Kuroneko
     #   @example
     #     "123456789012"
     #   @note 数字以外 (ハイフン等) は含まない
+
+    # @!attribute latest
+    #   @return [Boolean] 最新の状態であるか
 
     # @!attribute status
     #   @return [String] 状態名
@@ -36,30 +39,8 @@ class Kuroneko
     #   @example
     #     "030990"
 
-    # @param [String] number 伝票番号
-    # @param [Nokogiri::XML::Element] status 状態情報のテーブル行
-    # @param [Boolean] latest 最新の状態であるか
-    def initialize(number, status, latest=nil)
-      super(number, *parse(status))
-      @latest = latest unless latest.nil?
-    end
-
     # @return [Boolean] 最新の状態であるか
-    def latest?
-      @latest
-    end
+    alias latest? latest
 
-  private
-
-    # 状態を解析する
-    #
-    # @param [Nokogiri::XML::Element] status 状態情報のテーブル行
-    # @return [Array<String>] 状態
-    def parse(status)
-      return status unless status.is_a?(Nokogiri::XML::Element)
-      attrs = status.css('td').to_a
-      @latest = attrs.shift.css('img').attribute('alt').value == '最新'
-      attrs.map!(&:text)
-    end
   end
 end
