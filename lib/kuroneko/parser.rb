@@ -29,6 +29,14 @@ class Kuroneko
         History.new(number, statuses.map { |s| Status.new(number, *s) })
       end
 
+      # 状態行の先頭要素から最新状態か判別
+      #
+      # @param [Nokogiri::XML::Element] td 状態行の先頭の <td>
+      # @return [Boolean] 最新か否か
+      def parse_latest?(td)
+        td.css('img').attribute('src').value == '/images/nimotsu_01.gif'
+      end
+
       # 伝票番号と最新状態名を抽出する
       #
       # @param [Nokogiri::XML::Element] summary <table class="saisin">
@@ -46,7 +54,7 @@ class Kuroneko
       # @return [Array] Kuroneko::Status への引数
       def parse_status(status)
         attrs = status.css('td').to_a
-        latest = attrs.shift.css('img').attribute('alt').value == '最新'
+        latest = parse_latest?(attrs.shift)
         [latest] + attrs.map(&:text)
       end
 
