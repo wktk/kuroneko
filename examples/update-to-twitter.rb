@@ -8,7 +8,7 @@ neko = Kuroneko.new
 twitter = Twitter::REST::Client.new(
   consumer_key: '',
   consumer_secret: '',
-  accesss_token: '',
+  access_token: '',
   access_token_secret: '',
 )
 
