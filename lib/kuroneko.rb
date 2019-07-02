@@ -18,7 +18,13 @@ class Kuroneko
       status
       statuses
     ].each do |name|
-      define_method(name) { |*args| new.__send__(name, *args) }
+      define_method(name) { |*args| instance.__send__(name, *args) }
+    end
+
+    private
+
+    def instance
+      @instance ||= new
     end
   end
 
