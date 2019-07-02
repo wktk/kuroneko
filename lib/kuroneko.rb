@@ -11,6 +11,17 @@ class Kuroneko
   # @return [String] 問い合わせフォームの URL
   URL = 'http://toi.kuronekoyamato.co.jp/cgi-bin/tneko'.freeze
 
+  class << self
+    %i[
+      history
+      histories
+      status
+      statuses
+    ].each do |name|
+      define_method(name) { |*args| new.__send__(name, *args) }
+    end
+  end
+
   # @return [Mechanize] 使用する Mechanize インスタンス
   attr_accessor :agent
 
