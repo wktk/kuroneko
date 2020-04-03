@@ -25,9 +25,7 @@ Or install it yourself as:
 ``` ruby
 require "kuroneko"
 
-neko = Kuroneko.new
-
-status = neko.status("1234-5678-9012")
+status = Kuroneko.status("1234-5678-9012")
 #=> #<struct Kuroneko::Status>
 
 status.number
@@ -53,7 +51,7 @@ status.to_h
 ### 状態履歴を取得する
 
 ``` ruby
-history = neko.history("1234-5678-9012")
+history = Kuroneko.history("1234-5678-9012")
 #=> #<Kuroneko::History<Kuroneko::Status>>
 ```
 
